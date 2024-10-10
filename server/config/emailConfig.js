@@ -8,8 +8,8 @@ const sendEmail = async (to, subject, html) => {
       port: 465,
       secure: true,
       auth: {
-        user: process.env.GMAIL_USER,
-        pass: process.env.GMAIL_PASS,
+        user: process.env.GMAIL_USER, // gmail id
+        pass: process.env.GMAIL_PASS, // https://myaccount.google.com/apppasswords
       },
     });
 
