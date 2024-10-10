@@ -1,5 +1,5 @@
 json webtoken authentication setup with email otp verification
-‎‎<hr />
+‎‎<hr />  
 ‎protected routes and conditional rendering in react
-‎‎‎<hr />
+‎‎‎<hr />  
 https://rana-signup-react.vercel.app/
