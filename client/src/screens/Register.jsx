@@ -5,38 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import useDocumentTitle from "../hooks/useDocumentTitle";
 
-const OTPForm = ({ handleOtpSubmit, loading }) => {
-    const [otp, setOtp] = useState("");
-
-    return (
-        <form
-            onSubmit={(e) => handleOtpSubmit(e, otp)}
-            className="bg-gray-100 p-6 rounded shadow-md w-full max-w-sm mx-auto"
-        >
-            <div className="mb-4">
-                <input
-                    value={otp}
-                    onChange={(e) => setOtp(e.target.value)}
-                    type="number"
-                    name="otp"
-                    placeholder="Enter OTP"
-                    min="1000"
-                    max="9999"
-                    required
-                    className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-            </div>
-            <button
-                type="submit"
-                className="w-full p-3 bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-200"
-                disabled={loading}
-            >
-                {loading ? "Verifying..." : "Verify OTP"}
-            </button>
-        </form>
-    );
-};
-
+// Register User
 const Register = () => {
     useDocumentTitle("Register");
     const navigate = useNavigate();
@@ -173,6 +142,46 @@ const Register = () => {
                     </Link>
                 </p>
             )}
+        </div>
+    );
+};
+
+// Verify Otp
+const OTPForm = ({ handleOtpSubmit, loading }) => {
+    const [otp, setOtp] = useState("");
+
+    return (
+        <div>
+            <form
+                onSubmit={(e) => handleOtpSubmit(e, otp)}
+                className="bg-gray-100 p-6 rounded shadow-md w-full max-w-sm mx-auto"
+            >
+                <div className="mb-4">
+                    <input
+                        value={otp}
+                        onChange={(e) => setOtp(e.target.value)}
+                        type="number"
+                        name="otp"
+                        placeholder="Enter OTP"
+                        min="1000"
+                        max="9999"
+                        required
+                        className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                </div>
+                <button
+                    type="submit"
+                    className="w-full p-3 bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-200"
+                    disabled={loading}
+                >
+                    {loading ? "Verifying..." : "Verify OTP"}
+                </button>
+            </form>
+            <p className="mt-4 text-center">
+                <Link to="/login" className="text-blue-600 hover:underline">
+                    Go back instead ?
+                </Link>
+            </p>
         </div>
     );
 };
