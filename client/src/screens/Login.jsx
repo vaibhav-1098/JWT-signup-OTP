@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import jwtDecode from "jwt-decode";
 import useDocumentTitle from "../hooks/useDocumentTitle";
 import { authActions } from "../redux/store";
 
@@ -18,13 +19,26 @@ const Login = () => {
         }
     }, [isLogin, navigate]);
 
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (token) {
+            const decoded = jwtDecode(token);
+            const currentTime = Date.now() / 1000;
+            if (decoded.exp < currentTime) {
+                localStorage.clear();
+                dispatch(authActions.logout());
+                navigate("/login");
+            }
+        }
+    }, [dispatch, navigate]);
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [loading, setLoading] = useState(false); 
+    const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true); 
+        setLoading(true);
         try {
             const response = await axios.post(
                 `${import.meta.env.VITE_EXPRESS_URL}/api/user/login`,
@@ -47,7 +61,7 @@ const Login = () => {
             setPassword("");
             toast.error(error.response?.data?.msg, { autoClose: 1000, hideProgressBar: true });
         } finally {
-            setLoading(false); 
+            setLoading(false);
         }
     };
 
@@ -84,7 +98,7 @@ const Login = () => {
                 </div>
                 <button
                     type="submit"
-                    disabled={loading} 
+                    disabled={loading}
                     className={`w-full p-3 rounded ${
                         loading ? "bg-gray-500 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"
                     } text-white transition duration-200`}
