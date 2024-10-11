@@ -57,7 +57,7 @@ const Navbar = () => {
                 {isLogin && (
                     <div className="flex justify-center items-center gap-3 sm:gap-6">
                         <div>
-                            <i className="bi bi-person-circle"></i> <span class="text-sm">{Email}</span>
+                            <i className="bi bi-person-circle"></i> <span className="text-sm">{Email}</span>
                         </div>
                         <button onClick={handleLogout} className="bg-red-600 p-1 px-2 rounded-md">
                             Logout
