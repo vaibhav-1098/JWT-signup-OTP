@@ -67,8 +67,6 @@ const Register = () => {
                 localStorage.setItem("email", data.newUser.email);
                 dispatch(authActions.login());
                 navigate("/");
-            } else {
-                toast.error(data.msg, { autoClose: 1000, hideProgressBar: true });
             }
         } catch (error) {
             toast.error(error.response?.data?.msg, { autoClose: 1000, hideProgressBar: true });
