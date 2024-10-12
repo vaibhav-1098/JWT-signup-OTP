@@ -10,7 +10,7 @@ connectDB();
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(cors({origin: process.env.REACT_URL}));
+app.use(cors());
 
 app.get("/", (req, res) => {
     res.send("Welcome");
