@@ -29,7 +29,7 @@ const Register = () => {
         setLoading(true);
         try {
             const response = await axios.post(
-                ${import.meta.env.VITE_EXPRESS_URL}/api/user/register,
+                `${import.meta.env.VITE_EXPRESS_URL}/api/user/register`,
                 { name, email, password }
             );
             const data = response.data;
@@ -53,7 +53,7 @@ const Register = () => {
         setLoading(true);
         try {
             const response = await axios.post(
-                ${import.meta.env.VITE_EXPRESS_URL}/api/user/verifyOtp,
+                `${import.meta.env.VITE_EXPRESS_URL}/api/user/verifyOtp`,
                 { token, otp }
             );
             const data = response.data;
