@@ -29,7 +29,7 @@ const Register = () => {
         setLoading(true);
         try {
             const response = await axios.post(
-                `${import.meta.env.VITE_EXPRESS_URL}/api/user/register`,
+                ${import.meta.env.VITE_EXPRESS_URL}/api/user/register,
                 { name, email, password }
             );
             const data = response.data;
@@ -48,30 +48,27 @@ const Register = () => {
         }
     };
 
-const handleOtpSubmit = async (e, otp) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-        const response = await axios.post(
-            `${import.meta.env.VITE_EXPRESS_URL}/api/user/verifyOtp`,
-            { token, otp }
-        );
-        const data = response.data;
-        if (data?.success) {
-            localStorage.setItem("token", data.token);
-            localStorage.setItem("name", data.user.name);
-            localStorage.setItem("email", data.user.email);
-
-            dispatch(authActions.login());
-            toast.success(data.msg, { autoClose: 1000, hideProgressBar: true });
-            navigate("/");
+    const handleOtpSubmit = async (e, otp) => {
+        e.preventDefault();
+        setLoading(true);
+        try {
+            const response = await axios.post(
+                ${import.meta.env.VITE_EXPRESS_URL}/api/user/verifyOtp,
+                { token, otp }
+            );
+            const data = response.data;
+            if (data?.success) {
+                toast.success(data.msg, { autoClose: 1000, hideProgressBar: true });
+                navigate("/login");
+            } else {
+                toast.error(data.msg, { autoClose: 1000, hideProgressBar: true });
+            }
+        } catch (error) {
+            toast.error(error.response?.data?.msg, { autoClose: 1000, hideProgressBar: true });
+        } finally {
+            setLoading(false);
         }
-    } catch (error) {
-        toast.error(error.response?.data?.msg, { autoClose: 1000, hideProgressBar: true });
-    } finally {
-        setLoading(false);
-    }
-};
+    };
 
     return (
         <div className="p-4 mt-10">
