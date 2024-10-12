@@ -12,14 +12,7 @@ connectDB();
 // middlewares
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-
-const corsOptions = {
-    origin: "https://rana-signup-react.vercel.app", // Change this to your React app's URL
-    credentials: true, // Allow credentials (cookies, authorization headers, etc.)
-};
-
-app.use(cors(corsOptions));
-
+app.use(cors());
 
 /* routes */
 app.get("/", (req, res) => {
