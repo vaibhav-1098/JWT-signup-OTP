@@ -4,7 +4,6 @@ const jwt = require("jsonwebtoken");
 const sendEmail = require("../config/emailConfig");
 require("dotenv").config();
 
-// register user
 const registerUser = async (req, res) => {
     const { name, email, password } = req.body;
     if (name == password) {
@@ -29,7 +28,7 @@ const registerUser = async (req, res) => {
         await sendEmail(
             email,
             "Email Verification",
-            Your OTP for verification is ${otp}. Please verify within 5 minutes.
+            `Your OTP for verification is ${otp}. Please verify within 5 minutes.`
         );
 
         return res.send({
@@ -43,7 +42,6 @@ const registerUser = async (req, res) => {
     }
 };
 
-// verify otp 
 const verifyOtp = async (req, res) => {
     const { otp, token } = req.body;
 
@@ -80,7 +78,6 @@ const verifyOtp = async (req, res) => {
     }
 };
 
-// login user
 const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
