@@ -16,7 +16,6 @@ const registerUser = async (req, res) => {
         }
 
         const otp = Math.floor(1000 + Math.random() * 9000);
-
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const token = jwt.sign(
@@ -59,10 +58,15 @@ const verifyOtp = async (req, res) => {
                 ...newUser,
             });
 
+            const token = jwt.sign({ id: newUser._id }, process.env.SECRET_KEY, {
+                expiresIn: "10d",
+            });
+
             return res.send({
                 success: true,
                 msg: "registration successful",
                 newUser,
+                token,
             });
         } else {
             return res.status(400).send({

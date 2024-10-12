@@ -1,14 +1,17 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import useDocumentTitle from "../hooks/useDocumentTitle";
+import { authActions } from "../redux/store";
 
 // Register User
 const Register = () => {
     useDocumentTitle("Register");
+
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const isLogin = useSelector((state) => state.isLogin);
     useEffect(() => {
@@ -59,7 +62,11 @@ const Register = () => {
             const data = response.data;
             if (data?.success) {
                 toast.success(data.msg, { autoClose: 1000, hideProgressBar: true });
-                navigate("/login");
+                localStorage.setItem("token", data.token);
+                localStorage.setItem("name", data.newUser.name);
+                localStorage.setItem("email", data.newUser.email);
+                dispatch(authActions.login());
+                navigate("/");
             } else {
                 toast.error(data.msg, { autoClose: 1000, hideProgressBar: true });
             }

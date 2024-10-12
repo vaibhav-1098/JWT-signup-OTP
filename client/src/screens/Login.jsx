@@ -9,6 +9,7 @@ import { authActions } from "../redux/store";
 
 const Login = () => {
     useDocumentTitle("Login");
+    
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
