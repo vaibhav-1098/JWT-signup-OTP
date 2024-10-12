@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const sendEmail = require("../config/emailConfig");
 require("dotenv").config();
 
+// register user
 const registerUser = async (req, res) => {
     const { name, email, password } = req.body;
     if (name == password) {
@@ -42,6 +43,7 @@ const registerUser = async (req, res) => {
     }
 };
 
+// verify otp
 const verifyOtp = async (req, res) => {
     const { otp, token } = req.body;
 
@@ -52,17 +54,24 @@ const verifyOtp = async (req, res) => {
             let newUser = {
                 name: decoded.name,
                 email: decoded.email,
-                password: decoded.password,
+                password: decoded.password, 
             };
 
             newUser = await userModel.create({
                 ...newUser,
             });
 
+            const loginToken = jwt.sign(
+                { id: newUser._id },
+                process.env.SECRET_KEY,
+                { expiresIn: "10d" }
+            );
+
             return res.send({
                 success: true,
-                msg: "registration successful",
+                msg: "Registration and login successful",
                 newUser,
+                token: loginToken, 
             });
         } else {
             return res.status(400).send({
@@ -78,6 +87,7 @@ const verifyOtp = async (req, res) => {
     }
 };
 
+// login user
 const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
